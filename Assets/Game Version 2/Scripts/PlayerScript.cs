@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public PlayerHealthbarScript playerHealthbar;
     public float speed = 10f;
     public float padding = 0.8f;
     float minX;
@@ -11,10 +12,15 @@ public class PlayerScript : MonoBehaviour
     float minY;
     float maxY;
 
+    public float health = 20f;
+    float barFillAmount = 1f;
+    float damage = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         FindBoundaries();
+        damage = barFillAmount / health;
     }
 
     // Method to calculate the boundaries based on the camera's viewport
@@ -40,5 +46,25 @@ public class PlayerScript : MonoBehaviour
 
         // Update both x and y positions for vertical and horizontal movement
         transform.position = new Vector2(newXpos, newYpos);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the collided object has the tag "PlayerBullet"
+        if (collision.CompareTag("EnemyBullet"))
+        {
+            DamagePlayerHealthbar();   
+            Destroy(collision.gameObject); // Destroy the bullet GameObject
+            if(health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    void DamagePlayerHealthbar()
+    {
+        health -= 1;
+        barFillAmount = barFillAmount - damage;
     }
 }

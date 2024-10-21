@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerShipTag
-  - EnemyShipTag
-  - PlayerBullerTag
-  - EnemyBulletTag
+  - PlayerBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
