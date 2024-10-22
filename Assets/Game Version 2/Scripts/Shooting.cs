@@ -9,23 +9,17 @@ public class Shooting : MonoBehaviour
     public Transform spawnPoint2;   // Position for the second bullet spawn
     public float fireRate = 0.5f;   // Time in seconds between shots
 
-    private float nextFireTime = 0f; // Keeps track of when the next shot can be fired
-
     // Start is called before the first frame update
     void Start()
     {
-        // Initialization code if needed
+        StartCoroutine(AutoFire()); // Start the coroutine for automatic firing
     }
 
-    // Update is called once per frame
-    void Update()
+    // Coroutine for automatic firing
+    IEnumerator AutoFire()
     {
-        // Check if the "Fire1" button is held down (spacebar in this case) and the current time is past the next allowed fire time
-        if (Input.GetButton("Fire1") && Time.time >= nextFireTime)
+        while (true) // Infinite loop for continuous firing
         {
-            // Update the time for the next shot
-            nextFireTime = Time.time + fireRate;
-
             // Check if playerBullet and spawn points are assigned before instantiating
             if (playerBullet != null && spawnPoint1 != null && spawnPoint2 != null)
             {
@@ -38,6 +32,15 @@ public class Shooting : MonoBehaviour
             {
                 Debug.LogWarning("playerBullet or spawn points are not assigned.");
             }
+
+            // Wait for the specified fire rate before firing again
+            yield return new WaitForSeconds(fireRate);
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // If you want to include any additional functionality in Update, you can add it here.
     }
 }

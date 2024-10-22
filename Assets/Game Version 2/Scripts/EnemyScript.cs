@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour
     public HealthBar healthbar;
     public float speed = 1f;
     public float health = 10f;
+    public GameObject coinPrefab;
 
     float barSize = 1f;
     float damage = 0;
@@ -78,6 +79,7 @@ public class EnemyScript : MonoBehaviour
             Destroy(collision.gameObject); // Destroy the bullet GameObject
             if(health <= 0)
             {
+                Instantiate(coinPrefab, transform.position, Quaternion.identity);
                 Destroy(gameObject); // Destroy the enemy GameObject
             }
         }

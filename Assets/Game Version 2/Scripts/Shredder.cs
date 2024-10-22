@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour
+public class Shredder : MonoBehaviour
 {
-    public Transform bar;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -17,8 +16,8 @@ public class HealthBar : MonoBehaviour
         
     }
 
-    public void SetSize(float size)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        bar.localScale = new Vector2(size, 1f);
+        Destroy(collision.gameObject);
     }
 }
