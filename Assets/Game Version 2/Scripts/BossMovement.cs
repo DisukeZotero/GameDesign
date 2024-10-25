@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BossMovement : MonoBehaviour
+{
+    private float moveSpeed; // Speed at which the boss moves
+    private bool moveRight; // Direction in which the boss is moving (true for right, false for left)
+    public HealthBar healthbar;
+    public float health = 10f;
+    public GameObject coinPrefab;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        moveSpeed = 2f; // Initialize the move speed
+        moveRight = true; // Start moving to the right
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Get the screen boundaries in world units
+        float screenLeftBoundary = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)).x; // Left boundary
+        float screenRightBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, Camera.main.nearClipPlane)).x; // Right boundary
+
+        // Check if the boss has reached the right or left boundary
+        if (transform.position.x > screenRightBoundary)
+        {
+            moveRight = false; // Change direction to left
+        }
+        else if (transform.position.x < screenLeftBoundary)
+        {
+            moveRight = true; // Change direction to right
+        }
+
+        // Move the boss based on the current direction
+        if (moveRight)
+        {
+            transform.position = new Vector2(transform.position.x + moveSpeed * Time.deltaTime, transform.position.y); // Move right
+        }
+        else
+        {
+            transform.position = new Vector2(transform.position.x - moveSpeed * Time.deltaTime, transform.position.y); // Move left
+        }
+    }
+
+    void DamageHealthbar()
+    {
+        if (health > 0)
+        {
+            health -= 1; // Decrease health
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the collided object has the tag "PlayerBullet"
+        if (collision.CompareTag("PlayerBullet"))
+        {
+            DamageHealthbar();
+            Destroy(collision.gameObject); // Destroy the bullet GameObject
+            if (health <= 0)
+            {
+                Instantiate(coinPrefab, transform.position, Quaternion.identity);
+                Destroy(gameObject); // Destroy the enemy GameObject
+            }
+        }
+    }
+}
