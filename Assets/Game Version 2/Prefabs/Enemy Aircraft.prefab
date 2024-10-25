@@ -158,11 +158,16 @@ MonoBehaviour:
   - {fileID: 2447936720929372005}
   - {fileID: 669016105058096841}
   enemyBullet: {fileID: 6355896242514722568, guid: 5cf086a90eec275479c5bd564067e7e1, type: 3}
-  enemyBulletSpawnTime: 0.5
+  enemyBulletSpawnTime: 0.8
   healthbar: {fileID: 0}
   speed: 1
   health: 10
   coinPrefab: {fileID: 2675546640335225960, guid: b62746f5f72db3b4b87273291b70dd93, type: 3}
+  upgradePrefab: {fileID: 7570380276939103889, guid: 539b3f2e60914e6438eb8520758b72e0, type: 3}
+  healthBuffPrefab: {fileID: 1877575589808396509, guid: 0c09a0ecc1722344593887b97e17b6cd, type: 3}
+  healthBuffDropRate: 0.3
+  upgradeDropRate: 0.25
+  coinDropRate: 0.5
 --- !u!68 &9191355893532313635
 EdgeCollider2D:
   m_ObjectHideFlags: 0

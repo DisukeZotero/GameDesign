@@ -16,17 +16,16 @@ public class PlayerScript : MonoBehaviour
     float maxY;
 
     public float health = 20f; // Player's starting health
+    float maxHealth = 20f; // Maximum health the player can have
     float barFillAmount = 1f; // Initial fill amount of the health bar
     float damage = 0; // Amount of health deducted per damage
 
-    // Start is called before the first frame update
     void Start()
     {
         FindBoundaries(); // Calculate the screen boundaries for player movement
         damage = barFillAmount / health; // Calculate how much to decrease the health bar per damage
     }
 
-    // Method to calculate the boundaries based on the camera's viewport
     void FindBoundaries()
     {
         Camera gameCamera = Camera.main; // Get a reference to the main camera
@@ -36,50 +35,52 @@ public class PlayerScript : MonoBehaviour
         maxY = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Get input values for movement
         float deltaY = Input.GetAxis("Vertical") * Time.deltaTime * speed;
         float deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
 
-        // Calculate new positions and clamp them within the defined boundaries
         float newXpos = Mathf.Clamp(transform.position.x + deltaX, minX, maxX);
         float newYpos = Mathf.Clamp(transform.position.y + deltaY, minY, maxY);
 
-        // Update both x and y positions for vertical and horizontal movement
         transform.position = new Vector2(newXpos, newYpos);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the collided object has the tag "EnemyBullet"
         if (collision.CompareTag("EnemyBullet"))
         {
             DamagePlayerHealthbar();   
-            Destroy(collision.gameObject); // Destroy the bullet GameObject upon collision
+            Destroy(collision.gameObject);
             if (health <= 0)
             {
                 GameController.GameOver();
-                Destroy(gameObject); // Destroy the player GameObject if health reaches zero
+                Destroy(gameObject);
             }
         }
 
-        // Check if the collided object has the tag "Coin"
         if (collision.CompareTag("Coin"))
         {
-            Destroy(collision.gameObject); // Destroy the coin GameObject upon collection
-            coinCountScript.AddCount(); // Call AddCount method from CoinCount script to increase the count
+            Destroy(collision.gameObject);
+            coinCountScript.AddCount();
         }
     }
 
     void DamagePlayerHealthbar()
     {
-        if(health > 0)
+        if (health > 0)
         {
-            health -= 1; // Reduce health by 1 unit
-            barFillAmount = barFillAmount - damage; // Update the health bar's fill amount based on damage
+            health -= 1;
+            barFillAmount = barFillAmount - damage;
             playerHealthbar.SetAmount(barFillAmount);
         }
     }
+
+    public void AdjustHealth(float amount)
+{
+    health = Mathf.Min(health + amount, maxHealth); // Increase health but do not exceed maxHealth
+    barFillAmount = health / maxHealth; // Update the fill amount based on the new health
+    playerHealthbar.SetAmount(barFillAmount);
+}
+
 }

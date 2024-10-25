@@ -4,26 +4,32 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public Transform []gunPoint;
-    public GameObject enemyBullet;       // Reference to the bullet prefab
-    public float enemyBulletSpawnTime = 0.5f; // Time between each bullet spawn
+    public Transform[] gunPoint;
+    public GameObject enemyBullet;
+    public float enemyBulletSpawnTime = 0.5f;
     public HealthBar healthbar;
     public float speed = 1f;
     public float health = 10f;
     public GameObject coinPrefab;
+    public GameObject upgradePrefab;
+    public GameObject healthBuffPrefab;
+
+    [Range(0f, 1f)]
+    public float healthBuffDropRate = 0.15f; // Drop rate for the health buff, adjustable in Unity
+    [Range(0f, 1f)]
+    public float upgradeDropRate = 0.1f; // Drop rate for the upgrade, adjustable in Unity
+    [Range(0f, 1f)]
+    public float coinDropRate = 0.3f; // Drop rate for the coin, adjustable in Unity
 
     float barSize = 1f;
     float damage = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Start the coroutine to handle automatic shooting
         StartCoroutine(EnemyShooting());
         damage = barSize / health;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector2.down * speed * Time.deltaTime);
@@ -31,57 +37,60 @@ public class EnemyScript : MonoBehaviour
 
     void DamageHealthbar()
     {
-        if(health > 0)
+        if (health > 0)
         {
-            if (health > 0)
-            {
-                health -= 1;
-                barSize = barSize - damage;
-            }
-            
+            health -= 1;
+            barSize = barSize - damage;
         }
     }
 
-    // Function to instantiate bullets from the enemy's gun points
     void EnemyFire()
     {
-        for(int i = 0; i < gunPoint.Length; i++)
+        for (int i = 0; i < gunPoint.Length; i++)
         {
             Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity);
         }
-        // Check if enemyBullet and gun points are assigned before instantiating
-        // if (enemyBullet != null && gunPoint1 != null && gunPoint2 != null)
-        // {
-        //     Instantiate(enemyBullet, gunPoint1.position, Quaternion.identity);
-        //     Instantiate(enemyBullet, gunPoint2.position, Quaternion.identity);
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("enemyBullet or gun points are not assigned.");
-        // }
     }
 
-    // Coroutine that handles automatic shooting at intervals
     IEnumerator EnemyShooting()
     {
-        while (true) // Infinite loop for continuous firing
+        while (true)
         {
-            yield return new WaitForSeconds(enemyBulletSpawnTime); // Wait before firing again
-            EnemyFire(); // Call the Fire method to shoot bullets
+            yield return new WaitForSeconds(enemyBulletSpawnTime);
+            EnemyFire();
         }
     }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the collided object has the tag "PlayerBullet"
         if (collision.CompareTag("PlayerBullet"))
         {
             DamageHealthbar();
-            Destroy(collision.gameObject); // Destroy the bullet GameObject
-            if(health <= 0)
+            Destroy(collision.gameObject);
+            if (health <= 0)
             {
-                Instantiate(coinPrefab, transform.position, Quaternion.identity);
-                Destroy(gameObject); // Destroy the enemy GameObject
+                HandleDrops();
+                Destroy(gameObject);
             }
+        }
+    }
+
+    void HandleDrops()
+    {
+        float randomValue = Random.Range(0f, 1f);
+
+        // Adjusted drop logic to ensure that only one item drops per enemy
+        if (randomValue <= healthBuffDropRate)
+        {
+            Instantiate(healthBuffPrefab, transform.position, Quaternion.identity);
+        }
+        else if (randomValue <= healthBuffDropRate + upgradeDropRate)
+        {
+            Instantiate(upgradePrefab, transform.position, Quaternion.identity);
+        }
+        else if (randomValue <= healthBuffDropRate + upgradeDropRate + coinDropRate)
+        {
+            Instantiate(coinPrefab, transform.position, Quaternion.identity);
         }
     }
 }

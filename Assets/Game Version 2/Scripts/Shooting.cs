@@ -5,9 +5,8 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
     public GameObject playerBullet; // Reference to the bullet prefab
-    public Transform spawnPoint1;   // Position for the first bullet spawn
-    public Transform spawnPoint2;   // Position for the second bullet spawn
-    public float fireRate = 0.5f;   // Time in seconds between shots
+    public Transform[] spawnPoints;  // Array to hold positions for bullet spawn
+    public float fireRate = 0.5f;    // Time in seconds between shots
 
     // Start is called before the first frame update
     void Start()
@@ -21,12 +20,13 @@ public class Shooting : MonoBehaviour
         while (true) // Infinite loop for continuous firing
         {
             // Check if playerBullet and spawn points are assigned before instantiating
-            if (playerBullet != null && spawnPoint1 != null && spawnPoint2 != null)
+            if (playerBullet != null && spawnPoints.Length > 0)
             {
-                // Instantiate the bullet at the position of spawnPoint1 with no rotation
-                Instantiate(playerBullet, spawnPoint1.position, Quaternion.identity);
-                // Instantiate the bullet at the position of spawnPoint2 with no rotation
-                Instantiate(playerBullet, spawnPoint2.position, Quaternion.identity);
+                // Iterate through each spawn point and instantiate a bullet
+                foreach (Transform spawnPoint in spawnPoints)
+                {
+                    Instantiate(playerBullet, spawnPoint.position, Quaternion.identity);
+                }
             }
             else
             {
