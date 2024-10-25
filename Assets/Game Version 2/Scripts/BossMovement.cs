@@ -6,15 +6,16 @@ public class BossMovement : MonoBehaviour
 {
     private float moveSpeed; // Speed at which the boss moves
     private bool moveRight; // Direction in which the boss is moving (true for right, false for left)
-    public HealthBar healthbar;
-    public float health = 10f;
-    public GameObject coinPrefab;
+    public HealthBar healthbar; // Reference to the health bar component
+    public float health = 10f; // Health of the boss
+    public GameObject coinPrefab; // Coin prefab to instantiate on death
 
     // Start is called before the first frame update
     void Start()
     {
         moveSpeed = 2f; // Initialize the move speed
         moveRight = true; // Start moving to the right
+        UpdateHealthBar(); // Update health bar to full at the start
     }
 
     // Update is called once per frame
@@ -50,6 +51,17 @@ public class BossMovement : MonoBehaviour
         if (health > 0)
         {
             health -= 1; // Decrease health
+            UpdateHealthBar(); // Update health bar
+        }
+    }
+
+    void UpdateHealthBar()
+    {
+        if (healthbar != null)
+        {
+            // Calculate health ratio (0 to 1) and set it on the health bar
+            float healthRatio = health / 10f; // Assuming max health is 10
+            healthbar.SetSize(healthRatio); // Update the health bar size
         }
     }
 
@@ -58,12 +70,12 @@ public class BossMovement : MonoBehaviour
         // Check if the collided object has the tag "PlayerBullet"
         if (collision.CompareTag("PlayerBullet"))
         {
-            DamageHealthbar();
+            DamageHealthbar(); // Damage health
             Destroy(collision.gameObject); // Destroy the bullet GameObject
             if (health <= 0)
             {
-                Instantiate(coinPrefab, transform.position, Quaternion.identity);
-                Destroy(gameObject); // Destroy the enemy GameObject
+                Instantiate(coinPrefab, transform.position, Quaternion.identity); // Drop coin on death
+                Destroy(gameObject); // Destroy the boss GameObject
             }
         }
     }
