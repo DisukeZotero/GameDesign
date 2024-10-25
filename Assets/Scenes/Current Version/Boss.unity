@@ -1614,8 +1614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy:
-  - {fileID: 2803770024767779096, guid: 28cfbf660f2858144b5392a05b2055cb, type: 3}
-  - {fileID: 4623641818456738286, guid: 7ae1476c75a0a164b89ba1de48b0a9e6, type: 3}
+  - {fileID: 2803770024767779096, guid: c433c8c64142299439d2764e04026b8b, type: 3}
+  - {fileID: 4623641818456738286, guid: a3e6f7efc17cb9646965f6d40f5ca17a, type: 3}
   respawnTime: 10
   enemySpawnCount: 50
   gameController: {fileID: 383350264}
@@ -2550,7 +2550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 0}
-  health: 100
+  health: 1000
   coinPrefab: {fileID: 2675546640335225960, guid: b62746f5f72db3b4b87273291b70dd93, type: 3}
 --- !u!114 &1317454815
 MonoBehaviour:
@@ -3871,8 +3871,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.3, y: 0.000020027}
-  m_SizeDelta: {x: 101.5, y: 18}
+  m_AnchoredPosition: {x: 98.69829, y: 7.6875}
+  m_SizeDelta: {x: 294.4379, y: 33.375}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1920979931
 MonoBehaviour:

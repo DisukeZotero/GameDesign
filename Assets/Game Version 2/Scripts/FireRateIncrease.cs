@@ -8,7 +8,7 @@ public class FireRateIncrease : PowerUpEffects
     public float amount; // Amount to decrease the fire rate
 
     // Minimum fire rate limit
-    private const float MinFireRate = 0.17f;
+    private const float MinFireRate = 0.1f;
 
     public override void Apply(GameObject target)
     {
