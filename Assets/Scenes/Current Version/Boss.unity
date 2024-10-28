@@ -1744,11 +1744,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c54ecb4c11b4d941adc10c9bc808aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 2803770024767779096, guid: c433c8c64142299439d2764e04026b8b, type: 3}
-  - {fileID: 4623641818456738286, guid: a3e6f7efc17cb9646965f6d40f5ca17a, type: 3}
+  enemies: []
+  miniboss: {fileID: 0}
   respawnTime: 10
-  enemySpawnCount: 50
+  enemiesPerWave: 5
+  totalWaves: 20
   gameController: {fileID: 383350264}
 --- !u!4 &818044953
 Transform:

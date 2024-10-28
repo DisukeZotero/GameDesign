@@ -1194,6 +1194,7 @@ MonoBehaviour:
   coinCountScript: {fileID: 1856836893}
   GameController: {fileID: 383350264}
   health: 20
+  sceneInfo: {fileID: 11400000, guid: bfc3035c6a8a9de4d8aa7004e0692157, type: 2}
 --- !u!114 &617401534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1523,11 +1524,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c54ecb4c11b4d941adc10c9bc808aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
+  enemies:
   - {fileID: 2803770024767779096, guid: 28cfbf660f2858144b5392a05b2055cb, type: 3}
   - {fileID: 4623641818456738286, guid: 7ae1476c75a0a164b89ba1de48b0a9e6, type: 3}
+  minibosses: []
   respawnTime: 5
-  enemySpawnCount: 20
+  enemiesPerWave: 5
+  totalWaves: 3
   gameController: {fileID: 383350264}
 --- !u!4 &818044953
 Transform:
@@ -4055,6 +4058,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7429318595019865378, guid: a0bd8278be8210c48b66d1ab1568d9c0, type: 3}
+      propertyPath: sceneInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: bfc3035c6a8a9de4d8aa7004e0692157, type: 2}
     - target: {fileID: 8426781704130385465, guid: a0bd8278be8210c48b66d1ab1568d9c0, type: 3}
       propertyPath: m_Name
       value: LevelLoader

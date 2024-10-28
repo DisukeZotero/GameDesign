@@ -41,6 +41,6 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If you want to include any additional functionality in Update, you can add it here.
+ 
     }
 }
