@@ -75,7 +75,7 @@ public class Spawner : MonoBehaviour
     void SpawnEnemy()
     {
         int randomValue = Random.Range(0, enemies.Length); // Randomly select an enemy prefab from the array
-        float randomXpos = Random.Range(-5f, 5f); // Randomly select a position on the x-axis for spawning within a range of -5 to 5
+        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -5 to 5
         Instantiate(enemies[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the selected enemy at the specified position with no rotation
     }
 
@@ -83,7 +83,7 @@ public class Spawner : MonoBehaviour
     void SpawnMiniboss()
     {
         int randomValue = Random.Range(0, minibosses.Length); // Randomly select a miniboss prefab from the array
-        float randomXpos = Random.Range(-2f, 2f); // Randomly select a position on the x-axis for spawning within a range of -2 to 2
+        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -2 to 2
         Instantiate(minibosses[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the miniboss at the specified position with no rotation
     }
 }
