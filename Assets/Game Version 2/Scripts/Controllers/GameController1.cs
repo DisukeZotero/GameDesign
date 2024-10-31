@@ -6,7 +6,13 @@ public class GameController1 : MonoBehaviour
 {
     public StoryScene currentScene;
     public BottomBarController bottomBar;
-    public BackgroundController backgroundController;
+    public SpriteSwitcher backgroundController;
+
+    private State state = State.IDLE;
+    private enum State 
+    {
+        IDLE, ANIMATE 
+    }
 
     void Start()
     {
@@ -18,13 +24,11 @@ public class GameController1 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            if (bottomBar.IsCompleted())
+            if (state == State.IDLE && bottomBar.IsCompleted())
             {
                 if (bottomBar.IsLastSentence())
                 {
-                    currentScene = currentScene.nextScene;
-                    bottomBar.PlayScene(currentScene);
-                    backgroundController.SwitchImage(currentScene.background); // Switch background without animation
+                    PlayScene(currentScene.nextScene);
                 }
                 else
                 {
@@ -32,5 +36,24 @@ public class GameController1 : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void PlayScene(StoryScene scene)
+    {
+        StartCoroutine(SwitchScene(scene));
+    }
+    private IEnumerator SwitchScene(StoryScene scene)
+    {
+        state = State.ANIMATE;
+        currentScene = scene;
+        bottomBar.Hide();
+        yield return new WaitForSeconds(1f);
+        backgroundController.SwitchImage(scene.background);
+        yield return new WaitForSeconds(1f);
+        bottomBar.ClearText();
+        bottomBar.Show();
+        yield return new WaitForSeconds(1f);
+        bottomBar.PlayScene(scene);
+        state = State.IDLE;
     }
 }

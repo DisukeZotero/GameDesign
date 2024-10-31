@@ -15,7 +15,9 @@ MonoBehaviour:
   sentences:
   - text: What's happening? The realm is breaking down at unforseenable rate!
     speaker: {fileID: 11400000, guid: 5916309e05230ac47875b3ed368d305d, type: 2}
+    actions: []
   - text: The All-Consuming Void is growing...
     speaker: {fileID: 11400000, guid: ddba5319c010e8443b181bf7ed50bbef, type: 2}
+    actions: []
   background: {fileID: 21300000, guid: 1a747063f071c5d43a50b1ce8674c8ee, type: 3}
   nextScene: {fileID: 0}
