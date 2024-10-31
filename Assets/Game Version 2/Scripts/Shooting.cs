@@ -7,6 +7,7 @@ public class Shooting : MonoBehaviour
     public GameObject playerBullet; // Reference to the bullet prefab
     public Transform[] spawnPoints;  // Array to hold positions for bullet spawn
     public float fireRate = 0.5f;    // Time in seconds between shots
+    public AudioSource AudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class Shooting : MonoBehaviour
     {
         while (true) // Infinite loop for continuous firing
         {
+            AudioSource.Play();
             // Check if playerBullet and spawn points are assigned before instantiating
             if (playerBullet != null && spawnPoints.Length > 0)
             {
@@ -41,6 +43,6 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If you want to include any additional functionality in Update, you can add it here.
+ 
     }
 }

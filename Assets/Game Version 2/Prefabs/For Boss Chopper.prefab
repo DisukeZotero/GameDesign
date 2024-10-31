@@ -163,8 +163,8 @@ MonoBehaviour:
   coinPrefab: {fileID: 2675546640335225960, guid: b62746f5f72db3b4b87273291b70dd93, type: 3}
   upgradePrefab: {fileID: 7570380276939103889, guid: 539b3f2e60914e6438eb8520758b72e0, type: 3}
   healthBuffPrefab: {fileID: 1877575589808396509, guid: 0c09a0ecc1722344593887b97e17b6cd, type: 3}
-  healthBuffDropRate: 0.5
-  upgradeDropRate: 0.5
+  healthBuffDropRate: 0.3
+  upgradeDropRate: 0.2
   coinDropRate: 0
 --- !u!58 &1163519743528938789
 CircleCollider2D:

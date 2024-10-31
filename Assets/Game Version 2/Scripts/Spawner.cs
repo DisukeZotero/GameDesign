@@ -4,48 +4,86 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject[] enemy; // Array to store enemy prefabs
+    public GameObject[] enemies; // Array to store different enemy prefabs
+    public GameObject[] minibosses; // Array to store different miniboss prefabs
     public float respawnTime = 2.0f; // Time interval between spawns
-    public int enemySpawnCount = 10; // Number of enemies to spawn
+    public int enemiesPerWave = 5; // Number of enemies to spawn per wave
+    public int totalWaves = 9; // Total number of waves to spawn
+
     public GameController gameController; // Reference to the GameController script
 
-    private bool lastEnemySpawned = false; // Tracks if the last enemy has been spawned
+    private int currentWave = 0; // Tracks the current wave number
+    private bool lastWaveSpawned = false; // Tracks if the last wave has been spawned
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(EnemySpawner()); // Start the coroutine to spawn enemies repeatedly
+        StartCoroutine(WaveSpawner()); // Start the coroutine to spawn waves of enemies
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if the last enemy has been spawned and if no enemy exists in the scene
-        if (lastEnemySpawned && FindObjectOfType<EnemyScript>() == null)
+        // Check if the last wave has been spawned and if no enemy exists in the scene
+        if (lastWaveSpawned && FindObjectOfType<EnemyScript>() == null)
         {
             // Start a coroutine for the LevelComplete method from the GameController when all enemies are defeated
             StartCoroutine(gameController.LevelComplete());
         }
     }
 
-    // Coroutine to spawn enemies with a delay
-    IEnumerator EnemySpawner()
+    // Coroutine to spawn enemies in waves
+    IEnumerator WaveSpawner()
     {
-        // Loop to spawn a specific number of enemies
-        for (int i = 0; i < enemySpawnCount; i++)
+        while (currentWave < totalWaves) // Continue spawning until all waves are done
         {
-            yield return new WaitForSeconds(respawnTime); // Wait for the specified respawn time before spawning the next enemy
-            SpawnEnemy(); // Call method to spawn a random enemy
+            yield return StartCoroutine(SpawnWave()); // Wait for the current wave to finish spawning
+            currentWave++; // Move to the next wave
+            yield return new WaitForSeconds(5f); // Wait before starting the next wave (adjust as needed)
         }
 
-        lastEnemySpawned = true; // Set to true after all enemies are spawned
+        lastWaveSpawned = true; // Set to true after all waves are spawned
     }
 
-    // Method to spawn an enemy at a random position
+    // Coroutine to spawn a single wave of enemies
+    IEnumerator SpawnWave()
+    {
+        for (int i = 0; i < enemiesPerWave; i++)
+        {
+            yield return new WaitForSeconds(respawnTime); // Wait for the specified respawn time before spawning the next enemy
+
+            // Spawn minibosses in the last wave (wave 9)
+            if (currentWave == totalWaves - 1) // Check if it's the last wave
+            {
+                if (minibosses.Length > 0) // Check if there are minibosses available to spawn
+                {
+                    SpawnMiniboss(); // Spawn a miniboss
+                }
+                else
+                {
+                    SpawnEnemy(); // Spawn a regular enemy if no minibosses
+                }
+            }
+            else
+            {
+                SpawnEnemy(); // Call method to spawn a random enemy in other waves
+            }
+        }
+    }
+
+    // Method to spawn a random enemy at a random position
     void SpawnEnemy()
     {
-        int randomValue = Random.Range(0, enemy.Length); // Randomly select an enemy prefab from the array
-        float randomXpos = Random.Range(-2f, 2f); // Randomly select a position on the x-axis for spawning within a range of -2 to 2
-        Instantiate(enemy[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the selected enemy at the specified position with no rotation
+        int randomValue = Random.Range(0, enemies.Length); // Randomly select an enemy prefab from the array
+        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -5 to 5
+        Instantiate(enemies[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the selected enemy at the specified position with no rotation
+    }
+
+    // Method to spawn a miniboss at a random position
+    void SpawnMiniboss()
+    {
+        int randomValue = Random.Range(0, minibosses.Length); // Randomly select a miniboss prefab from the array
+        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -2 to 2
+        Instantiate(minibosses[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the miniboss at the specified position with no rotation
     }
 }
