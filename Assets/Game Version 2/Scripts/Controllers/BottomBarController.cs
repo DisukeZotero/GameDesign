@@ -105,18 +105,18 @@ public class BottomBarController : MonoBehaviour
         switch (action.actionType)
         {
             case StoryScene.Sentence.Action.Type.APPEAR:
-                if (!sprites.ContainsKey(action.speaker))
+                if (sprites.ContainsKey(action.speaker))
                 {
                     controller = Instantiate(action.speaker.prefab.gameObject, spritesPrefab.transform).GetComponent<SpriteController>();
                     sprites.Add(action.speaker, controller);
                 }
-                 else
+                else
                 {
                     controller = sprites[action.speaker];
                 }
                 controller.Setup(action.speaker.sprites[action.spriteIndex]);
                 controller.Show(action.coords);
-            return;
+                return;
             case StoryScene.Sentence.Action.Type.MOVE:
                 if (sprites.ContainsKey(action.speaker))
                 {

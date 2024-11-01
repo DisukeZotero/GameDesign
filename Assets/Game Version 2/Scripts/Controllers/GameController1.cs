@@ -7,6 +7,7 @@ public class GameController1 : MonoBehaviour
     public StoryScene currentScene;
     public BottomBarController bottomBar;
     public SpriteSwitcher backgroundController;
+    public AudioController audioController;
 
     private State state = State.IDLE;
     private enum State 
@@ -16,8 +17,11 @@ public class GameController1 : MonoBehaviour
 
     void Start()
     {
+        StoryScene storyScene = currentScene as StoryScene;
         bottomBar.PlayScene(currentScene);
         backgroundController.SetImage(currentScene.background); // Set initial background
+        PlayAudio(storyScene.sentences[0]);
+
     }
 
     void Update()
@@ -33,6 +37,7 @@ public class GameController1 : MonoBehaviour
                 else
                 {
                     bottomBar.PlayNextSentence();
+                    PlayAudio((currentScene as StoryScene).sentence[bottomBar.GetSentenceIndex()]);
                 }
             }
         }
@@ -49,11 +54,17 @@ public class GameController1 : MonoBehaviour
         bottomBar.Hide();
         yield return new WaitForSeconds(1f);
         backgroundController.SwitchImage(scene.background);
+        PlayAudio(storyScene.sentence[0]);
         yield return new WaitForSeconds(1f);
         bottomBar.ClearText();
         bottomBar.Show();
         yield return new WaitForSeconds(1f);
         bottomBar.PlayScene(scene);
         state = State.IDLE;
+    }
+
+    private void PlayAudio(StoryScene.Sentence sentence)
+    {
+        audioController.PlayAudio(sentence.music, sentence.sound);
     }
 }

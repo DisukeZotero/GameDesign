@@ -17,6 +17,9 @@ public class StoryScene : ScriptableObject
         public Speaker speaker;
         public List<Action> actions;
 
+        public AudioClip  music;
+        public AudioClip sound;
+
         [System.Serializable]
         public struct Action
         {
@@ -28,7 +31,8 @@ public class StoryScene : ScriptableObject
 
             [System.Serializable]
 
-            public enum Type{
+            public enum Type
+            {
                 NONE, APPEAR, MOVE, DISAPPEAR
             }
 
