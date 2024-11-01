@@ -104,9 +104,9 @@ GameObject:
   - component: {fileID: 4609515806434276313}
   - component: {fileID: 8013186024400868775}
   - component: {fileID: 4241703141486623985}
-  - component: {fileID: 732753562808497851}
   - component: {fileID: 3538655536789552245}
   - component: {fileID: 8621953373750489511}
+  - component: {fileID: 668876880622705139}
   m_Layer: 0
   m_Name: MiniBoss
   m_TagString: Untagged
@@ -124,7 +124,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -25.495712, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 661268359382738325}
@@ -173,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1208248871, guid: a1c37a925dd83bc42ad2481480b75ba2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd05c7e1e22d8b34ab754a155a063485, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -194,7 +194,7 @@ Animator:
   m_GameObject: {fileID: 9049683385127574441}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78004fc36131416468a36c72c681defd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9a7f753b7a77dad44975d0b393674f30, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -205,55 +205,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!68 &732753562808497851
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9049683385127574441}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.998978, y: -0.3735695}
-  - {x: -0.45972317, y: -0.3990631}
-  - {x: -0.19208035, y: -0.4422493}
-  - {x: -0.15373534, y: -0.72621536}
-  - {x: 0.0040385127, y: -0.9857178}
-  - {x: 0.14732732, y: -0.7461281}
-  - {x: 0.19086687, y: -0.42689705}
-  - {x: 0.66361326, y: -0.3979969}
-  - {x: 1.0740483, y: -0.38453293}
-  - {x: 1.0923699, y: -0.3735695}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!50 &3538655536789552245
 Rigidbody2D:
   serializedVersion: 4
@@ -301,10 +252,58 @@ MonoBehaviour:
   enemyBulletSpawnTime: 0.5
   healthbar: {fileID: 0}
   speed: 1
-  health: 20
+  health: 150
   coinPrefab: {fileID: 0}
   upgradePrefab: {fileID: 7570380276939103889, guid: 539b3f2e60914e6438eb8520758b72e0, type: 3}
   healthBuffPrefab: {fileID: 1877575589808396509, guid: 0c09a0ecc1722344593887b97e17b6cd, type: 3}
   healthBuffDropRate: 0.3
   upgradeDropRate: 0.2
   coinDropRate: 0
+--- !u!68 &668876880622705139
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049683385127574441}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5770357, y: -0.6344528}
+  - {x: -0.48830137, y: -0.6898098}
+  - {x: -0.33558062, y: -0.6383095}
+  - {x: -0.1998679, y: -0.63062096}
+  - {x: 0.008019388, y: -1.0059433}
+  - {x: 0.21995129, y: -0.6084652}
+  - {x: 0.32288247, y: -0.64079094}
+  - {x: 0.47975764, y: -0.67007446}
+  - {x: 0.58120984, y: -0.60940933}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

@@ -87,6 +87,31 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+        if (collision.CompareTag("MiniBossBullet"))
+        {
+            DamagePlayerHealthbar(); // Decrease health bar on taking damage
+
+            // Play damage sound at the player's position
+            if (damageSound != null)
+            {
+                AudioSource.PlayClipAtPoint(damageSound, transform.position);
+            }
+
+            Destroy(collision.gameObject); // Destroy the enemy bullet
+            
+            if (health <= 0) // Check if player health is depleted
+            {
+                // Play explosion sound at the player's position
+                if (explosionSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f);
+                }
+
+                GameController.GameOver(); // Trigger game over from GameController
+                Destroy(gameObject); // Destroy player object
+            }
+        }
+
         // Check if the collision is with a coin
         if (collision.CompareTag("Coin"))
         {

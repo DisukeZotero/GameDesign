@@ -47,13 +47,15 @@ public class BossMovement : MonoBehaviour
     }
 
     void DamageHealthbar()
+{
+    if (health > 0)
     {
-        if (health > 0)
-        {
-            health -= 1; // Decrease health
-            UpdateHealthBar(); // Update health bar
-        }
+        health -= 1; // Decrease health
+        Debug.Log("Boss Health: " + health); // Log current health
+        UpdateHealthBar(); // Update health bar
     }
+}
+
 
     void UpdateHealthBar()
     {
@@ -66,17 +68,21 @@ public class BossMovement : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision)
+{
+    // Check if the collided object has the tag "PlayerBullet"
+    if (collision.CompareTag("PlayerBullet"))
     {
-        // Check if the collided object has the tag "PlayerBullet"
-        if (collision.CompareTag("PlayerBullet"))
+        DamageHealthbar(); // Damage health
+        Destroy(collision.gameObject); // Destroy the bullet GameObject
+        
+        // Check if health is 0 or less
+        if (health <= 0)
         {
-            DamageHealthbar(); // Damage health
-            Destroy(collision.gameObject); // Destroy the bullet GameObject
-            if (health <= 0)
-            {
-                Instantiate(coinPrefab, transform.position, Quaternion.identity); // Drop coin on death
-                Destroy(gameObject); // Destroy the boss GameObject
-            }
+            Debug.Log("Boss defeated!"); // Log when boss is defeated
+            Instantiate(coinPrefab, transform.position, Quaternion.identity); // Drop coin on death
+            Destroy(gameObject); // Destroy the boss GameObject
         }
     }
+}
+
 }
