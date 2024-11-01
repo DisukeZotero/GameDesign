@@ -939,6 +939,7 @@ MonoBehaviour:
   currentScene: {fileID: 11400000, guid: eb39932f575dd0749af24fd44110fcf3, type: 2}
   bottomBar: {fileID: 497593134}
   backgroundController: {fileID: 951375562}
+  audioController: {fileID: 0}
 --- !u!1 &383350263
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4108,7 @@ MonoBehaviour:
   currentScene: {fileID: 0}
   bottomBar: {fileID: 0}
   backgroundController: {fileID: 0}
+  audioController: {fileID: 0}
 --- !u!1 &1534394113
 GameObject:
   m_ObjectHideFlags: 0

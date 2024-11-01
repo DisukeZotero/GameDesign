@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2412971685187828793}
   - component: {fileID: 6543136203919217339}
   - component: {fileID: 1937914077987896839}
-  - component: {fileID: 4788254806664220436}
+  - component: {fileID: 7219591805438620821}
   m_Layer: 5
   m_Name: Omen
   m_TagString: Untagged
@@ -154,7 +154,7 @@ Animator:
   m_GameObject: {fileID: 4553391009914028859}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ae96458b5ba4a9f41bbcb6b461c813a3, type: 2}
+  m_Controller: {fileID: 9100000, guid: a00b2dfda3c470c49b40057c247ae012, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -165,7 +165,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4788254806664220436
+--- !u!114 &7219591805438620821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a684df9509c5e042b0005695f928996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1937914077987896839}
 --- !u!1 &6803962768001103570
 GameObject:
   m_ObjectHideFlags: 0
