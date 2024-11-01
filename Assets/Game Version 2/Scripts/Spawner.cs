@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
 
     private int currentWave = 0; // Tracks the current wave number
     private bool lastWaveSpawned = false; // Tracks if the last wave has been spawned
+    private bool minibossSpawned = false; // Tracks if a miniboss has already been spawned
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,8 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check if the last wave has been spawned and if no enemy exists in the scene
-        if (lastWaveSpawned && FindObjectOfType<EnemyScript>() == null)
+        // Check if the last wave has been spawned and if no enemies exist in the scene
+        if (lastWaveSpawned && FindObjectsOfType<EnemyScript>().Length == 0 && FindObjectsOfType<MiniBossScript>().Length == 0)
         {
             // Start a coroutine for the LevelComplete method from the GameController when all enemies are defeated
             StartCoroutine(gameController.LevelComplete());
@@ -48,21 +49,17 @@ public class Spawner : MonoBehaviour
     // Coroutine to spawn a single wave of enemies
     IEnumerator SpawnWave()
     {
+        minibossSpawned = false; // Reset miniboss spawn flag at the start of the wave
+
         for (int i = 0; i < enemiesPerWave; i++)
         {
             yield return new WaitForSeconds(respawnTime); // Wait for the specified respawn time before spawning the next enemy
 
-            // Spawn minibosses in the last wave (wave 9)
-            if (currentWave == totalWaves - 1) // Check if it's the last wave
+            // Spawn minibosses only once in the last wave (wave 9)
+            if (currentWave == totalWaves - 1 && !minibossSpawned) // Check if it's the last wave and miniboss hasn't spawned
             {
-                if (minibosses.Length > 0) // Check if there are minibosses available to spawn
-                {
-                    SpawnMiniboss(); // Spawn a miniboss
-                }
-                else
-                {
-                    SpawnEnemy(); // Spawn a regular enemy if no minibosses
-                }
+                SpawnMiniboss(); // Spawn a miniboss
+                minibossSpawned = true; // Set the flag to true to prevent further miniboss spawns
             }
             else
             {
@@ -75,15 +72,23 @@ public class Spawner : MonoBehaviour
     void SpawnEnemy()
     {
         int randomValue = Random.Range(0, enemies.Length); // Randomly select an enemy prefab from the array
-        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -5 to 5
+        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning
         Instantiate(enemies[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the selected enemy at the specified position with no rotation
     }
 
     // Method to spawn a miniboss at a random position
     void SpawnMiniboss()
     {
-        int randomValue = Random.Range(0, minibosses.Length); // Randomly select a miniboss prefab from the array
-        float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning within a range of -2 to 2
-        Instantiate(minibosses[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity); // Instantiate the miniboss at the specified position with no rotation
+        if (minibosses.Length > 0) // Check if there are minibosses available to spawn
+        {
+            int randomValue = Random.Range(0, minibosses.Length); // Randomly select a miniboss prefab from the array
+            float randomXpos = Random.Range(-10f, 10f); // Randomly select a position on the x-axis for spawning
+            Instantiate(minibosses[randomValue], new Vector2(randomXpos, transform.position.y), Quaternion.identity);
+            Debug.Log("Miniboss spawned: " + minibosses[randomValue].name); // Debug log to verify spawn
+        }
+        else
+        {
+            Debug.LogWarning("No minibosses available to spawn."); // Log a warning if no minibosses are available
+        }
     }
 }

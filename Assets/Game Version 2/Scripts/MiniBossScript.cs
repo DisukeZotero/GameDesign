@@ -25,10 +25,15 @@ public class MiniBossScript : MonoBehaviour
     private float damage = 0; // Damage value
     private bool isMovingHorizontally = false; // Flag to track horizontal movement
     private Vector2 initialPosition; // Initial position of the miniboss
+    private float yPosition; // Store the y-axis position after moving down
+    private float targetX; // Target x position for left/right movement
+    private float moveSpeed = 2f; // Speed of horizontal movement
+    private float moveRange = 3f; // Distance to move left and right
 
     void Start()
     {
-        initialPosition = transform.position; // Store the initial position
+        initialPosition = new Vector2(0f, transform.position.y); // Set initial position to the middle of the screen
+        transform.position = initialPosition; // Set the miniboss position to the middle
         StartCoroutine(EnemyShooting()); // Start shooting
         damage = barSize / health; // Calculate damage per health
         StartCoroutine(MoveDownAndThenHorizontal()); // Start movement coroutine
@@ -80,16 +85,24 @@ public class MiniBossScript : MonoBehaviour
         }
 
         transform.position = targetPosition; // Ensure the position is set to the target position
+        yPosition = transform.position.y; // Store the y-axis position
+        yield return new WaitForSeconds(0.5f); // Wait before starting horizontal movement
+
         isMovingHorizontally = true; // Start moving horizontally
+
+        // Set the initial target position for left/right movement
+        targetX = 0f; // Start at the center
     }
 
-    // Method to move left and right
+    // Method to move left and right smoothly
     void MoveLeftRight()
     {
-        float moveSpeed = 2f; // Speed of horizontal movement
-        float moveRange = 2f; // Distance to move left and right
-        float newX = Mathf.PingPong(Time.time * moveSpeed, moveRange) - (moveRange / 2);
-        transform.position = new Vector2(initialPosition.x + newX, transform.position.y);
+        // Calculate the target position using Mathf.PingPong for smooth left/right movement
+        targetX = Mathf.PingPong(Time.time * moveSpeed, moveRange * 2) - moveRange; // Adjusted to move between -3 and 3
+
+        // Smoothly move towards the target x position
+        float smoothX = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * moveSpeed);
+        transform.position = new Vector2(smoothX, yPosition); // Update position, keeping y constant
     }
 
     // Handle health damage and drops
@@ -99,9 +112,11 @@ public class MiniBossScript : MonoBehaviour
         {
             DamageHealthbar();
             Destroy(collision.gameObject);
+            Debug.Log($"Miniboss hit! Current health: {health}"); // Debug log for health
             if (health <= 0)
             {
                 HandleDrops();
+                Debug.Log("Miniboss defeated!"); // Debug log for defeat
                 Destroy(gameObject);
             }
         }
