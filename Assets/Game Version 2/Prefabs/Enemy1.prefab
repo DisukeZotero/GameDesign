@@ -159,7 +159,7 @@ MonoBehaviour:
   - {fileID: 2447936720929372005}
   - {fileID: 2633652493292863977}
   enemyBullet: {fileID: 6355896242514722568, guid: 5cf086a90eec275479c5bd564067e7e1, type: 3}
-  enemyBulletSpawnTime: 0.8
+  enemyBulletSpawnTime: 0.5
   healthbar: {fileID: 0}
   speed: 1
   health: 10

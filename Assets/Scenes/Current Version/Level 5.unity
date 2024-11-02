@@ -1350,6 +1350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 2803770024767779096, guid: 28cfbf660f2858144b5392a05b2055cb, type: 3}
+  - {fileID: 2803770024767779096, guid: 9a4c8b05f98f1f24fbf3aa323ad7b790, type: 3}
   minibosses:
   - {fileID: 9049683385127574441, guid: ca00c92cebf4d9b42bee46c3d223cf0e, type: 3}
   respawnTime: 1

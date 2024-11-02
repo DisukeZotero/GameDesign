@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MiniBoss
+  m_Name: Boss Animation
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: f2cc60f7cbbab9c43ba496e0eca7c061, type: 3}
+      value: {fileID: -426369372, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: a9637b19294244c4d9a0212e346b5365, type: 3}
+      value: {fileID: -1651393632, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
+    - time: 0.16666667
+      value: {fileID: 1752055134, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
+    - time: 0.25
+      value: {fileID: -532211948, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,14 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: f2cc60f7cbbab9c43ba496e0eca7c061, type: 3}
-    - {fileID: 21300000, guid: a9637b19294244c4d9a0212e346b5365, type: 3}
+    - {fileID: -426369372, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
+    - {fileID: -1651393632, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
+    - {fileID: 1752055134, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
+    - {fileID: -532211948, guid: 6a877eb0aa0c7fc4ea3c2a1c2491d735, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.33333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
