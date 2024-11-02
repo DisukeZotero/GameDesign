@@ -1408,7 +1408,7 @@ MonoBehaviour:
   - {fileID: 9049683385127574441, guid: ca00c92cebf4d9b42bee46c3d223cf0e, type: 3}
   respawnTime: 2
   enemiesPerWave: 5
-  totalWaves: 3
+  totalWaves: 4
   gameController: {fileID: 383350264}
 --- !u!4 &818044953
 Transform:

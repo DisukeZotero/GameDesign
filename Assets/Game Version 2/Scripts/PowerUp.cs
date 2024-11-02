@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     public PowerUpEffects powerUpEffects;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);

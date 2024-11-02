@@ -1,6 +1,4 @@
-
- using UnityEngine;
-
+using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "NewSpeaker", menuName = "Data/New Speaker")]

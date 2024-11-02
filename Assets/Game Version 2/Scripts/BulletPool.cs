@@ -41,7 +41,7 @@ public class BulletPool : MonoBehaviour
                 if (bullets[i] != null && !bullets[i].activeInHierarchy)
                 {
                     bullets[i].SetActive(true); // Activate the bullet
-                    audioSource.PlayOneShot(bulletSound);
+                    audioSource.PlayOneShot(bulletSound); // Play shooting sound
                     return bullets[i]; // Return the inactive bullet
                 }
             }
@@ -53,7 +53,7 @@ public class BulletPool : MonoBehaviour
             GameObject bul = Instantiate(pooledBullet); // Instantiate the bullet prefab
             bul.SetActive(false); // Set the bullet to inactive
             bullets.Add(bul); // Add the bullet to the pool
-            audioSource.PlayOneShot(bulletSound);
+            audioSource.PlayOneShot(bulletSound); // Play shooting sound
             return bul; // Return the newly created bullet
         }
 

@@ -13,7 +13,7 @@ public class BossScript : MonoBehaviour
     public GameObject coinPrefab; // Prefab for coin drop
     public GameObject upgradePrefab; // Prefab for upgrade drop
     public GameObject healthBuffPrefab; // Prefab for health buff drop
-    public GameObject enemyExplosionPrefab; // Prefab for Explosion
+    public GameObject enemyExplosionPrefab; // Prefab for explosion effect
 
     [Range(0f, 1f)]
     public float healthBuffDropRate = 0.15f; // Drop rate for health buff
@@ -38,11 +38,11 @@ public class BossScript : MonoBehaviour
 
     void Start()
     {
-        initialPosition = new Vector2(0f, transform.position.y);
+        initialPosition = new Vector2(0f, transform.position.y); // Set initial position
         transform.position = initialPosition; 
-        StartCoroutine(EnemyShooting()); // Start shooting
-        damage = barSize / health; 
-        StartCoroutine(MoveDownAndThenHorizontal()); // Start movement coroutine
+        StartCoroutine(EnemyShooting()); // Start shooting bullets
+        damage = barSize / health; // Calculate damage per health unit
+        StartCoroutine(MoveDownAndThenHorizontal()); // Start vertical movement
     }
 
     void Update()
@@ -57,16 +57,17 @@ public class BossScript : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(enemyBulletSpawnTime);
-            EnemyFire(); // Fire bullets
+            yield return new WaitForSeconds(enemyBulletSpawnTime); // Wait before next shot
+            EnemyFire(); // Fire bullets from the gun points
         }
     }
 
     void EnemyFire()
     {
+        // Instantiate bullets at each gun point
         for (int i = 0; i < gunPoint.Length; i++)
         {
-            Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity);
+            Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity); // Create bullet
         }
     }
 
@@ -76,28 +77,29 @@ public class BossScript : MonoBehaviour
         float moveDuration = 1f; 
         Vector2 targetPosition = new Vector2(initialPosition.x, initialPosition.y - moveDownDistance);
 
-        // Move down
+        // Move down over a specified duration
         float elapsedTime = 0f;
         while (elapsedTime < moveDuration)
         {
             transform.position = Vector2.Lerp(initialPosition, targetPosition, elapsedTime / moveDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            elapsedTime += Time.deltaTime; // Increment time
+            yield return null; // Wait for the next frame
         }
 
-        transform.position = targetPosition; 
-        yPosition = transform.position.y; 
-        yield return new WaitForSeconds(0.5f); 
+        transform.position = targetPosition; // Set final down position
+        yPosition = transform.position.y; // Store y position for later use
+        yield return new WaitForSeconds(0.5f); // Wait before starting horizontal movement
 
-        isMovingHorizontally = true; // Start moving horizontally
+        isMovingHorizontally = true; // Begin horizontal movement
         targetX = 0f; // Start at the center
     }
 
     void MoveLeftRight()
     {
+        // Calculate target X position for smooth left-right movement
         targetX = Mathf.PingPong(Time.time * moveSpeed, moveRange * 2) - moveRange; 
-        float smoothX = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * moveSpeed); 
-        transform.position = new Vector2(smoothX, yPosition); 
+        float smoothX = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * moveSpeed); // Smooth movement
+        transform.position = new Vector2(smoothX, yPosition); // Update position
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -105,18 +107,18 @@ public class BossScript : MonoBehaviour
         if (collision.CompareTag("PlayerBullet"))
         {
             audioSource.PlayOneShot(damageSound); // Play damage sound
-            DamageHealthbar(); // Apply damage to the health bar
+            DamageHealthbar(); // Apply damage to the boss health
             Destroy(collision.gameObject); // Destroy the player's bullet
             Debug.Log($"Boss hit! Current health: {health}"); 
             if (health <= 0)
             {
                 AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f); // Play explosion sound
-                HandleDrops(); // Handle drops upon defeat
+                HandleDrops(); // Handle drops upon boss defeat
                 DestroyRemainingEnemies(); // Destroy all remaining enemies
                 Debug.Log("Boss defeated!"); 
-                Destroy(gameObject); // Destroy the boss
+                Destroy(gameObject); // Destroy the boss object
                 GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
-                Destroy(enemyExplosion, 0.4f);
+                Destroy(enemyExplosion, 0.4f); // Destroy explosion effect after a delay
             }
         }
     }
@@ -125,32 +127,32 @@ public class BossScript : MonoBehaviour
     {
         if (health > 0)
         {
-            health -= 1; 
-            barSize -= damage; 
+            health -= 1; // Reduce health by 1
+            barSize -= damage; // Update health bar size
         }
     }
 
     void HandleDrops()
     {
-        float randomValue = Random.Range(0f, 1f);
+        float randomValue = Random.Range(0f, 1f); // Get a random value to determine drops
         if (randomValue <= healthBuffDropRate)
         {
-            Instantiate(healthBuffPrefab, transform.position, Quaternion.identity); 
+            Instantiate(healthBuffPrefab, transform.position, Quaternion.identity); // Drop health buff
         }
         else if (randomValue <= healthBuffDropRate + upgradeDropRate)
         {
-            Instantiate(upgradePrefab, transform.position, Quaternion.identity); 
+            Instantiate(upgradePrefab, transform.position, Quaternion.identity); // Drop upgrade
         }
         else if (randomValue <= healthBuffDropRate + upgradeDropRate + coinDropRate)
         {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity); 
+            Instantiate(coinPrefab, transform.position, Quaternion.identity); // Drop coin
         }
     }
 
-    // New method to destroy all remaining enemies
+    // Destroy all remaining enemies in the scene
     void DestroyRemainingEnemies()
     {
-        EnemyScript[] remainingEnemies = FindObjectsOfType<EnemyScript>();
+        EnemyScript[] remainingEnemies = FindObjectsOfType<EnemyScript>(); // Find all remaining enemies
         foreach (var enemy in remainingEnemies)
         {
             Destroy(enemy.gameObject); // Destroy each remaining enemy

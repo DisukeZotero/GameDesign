@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public Renderer meshRender;
-    public float speed = 0.1f; // Added a semicolon to end the statement
+    public Renderer meshRender; // Reference to the renderer for texture manipulation
+    public float speed = 0.1f; // Speed of the texture offset
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,12 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 offset = meshRender.material.mainTextureOffset;
 
         // Increment the offset based on speed and time
-        offset = offset + new Vector2(0, speed * Time.deltaTime);
+        offset += new Vector2(0, speed * Time.deltaTime);
 
         // Apply the updated offset back to the material's texture
-        meshRender.material.mainTextureOffset = offset; // Removed the extra semicolon after mainTextureOffset
+        meshRender.material.mainTextureOffset = offset; // Update texture offset
 
-        meshRender.material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
+        // The following line is redundant; it repeats the offset update
+        // meshRender.material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
     }
 }

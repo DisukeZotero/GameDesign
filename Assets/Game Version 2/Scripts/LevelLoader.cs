@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     int currentIndex;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class LevelLoader : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(currentIndex+1);
+        SceneManager.LoadScene(currentIndex + 1);
     }
 
     public void Reload()

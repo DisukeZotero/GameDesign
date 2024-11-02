@@ -22,7 +22,6 @@ public class MiniBossScript : MonoBehaviour
     [Range(0f, 1f)]
     public float coinDropRate = 0.3f; // Drop rate for coins
 
-    // Audio settings
     public AudioClip bulletSound; // Sound for shooting
     public AudioClip damageSound; // Sound for getting hit
     public AudioClip explosionSound; // Sound for explosion
@@ -48,14 +47,12 @@ public class MiniBossScript : MonoBehaviour
 
     void Update()
     {
-        // If moving horizontally, move left and right
         if (isMovingHorizontally)
         {
             MoveLeftRight();
         }
     }
 
-    // Coroutine for shooting bullets
     IEnumerator EnemyShooting()
     {
         while (true)
@@ -65,29 +62,24 @@ public class MiniBossScript : MonoBehaviour
         }
     }
 
-    // Method to fire bullets from gun points
     void EnemyFire()
     {
         for (int i = 0; i < gunPoint.Length; i++)
         {
             Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity);
         }
-        // Play shooting sound
         if (audioSource && bulletSound)
         {
             audioSource.PlayOneShot(bulletSound);
         }
     }
 
-    // Coroutine to handle the miniboss's movement
     IEnumerator MoveDownAndThenHorizontal()
     {
-        // Move down first
         float moveDownDistance = 2f; // Distance to move down before moving horizontally
         float moveDuration = 1f; // Duration to move down
         Vector2 targetPosition = new Vector2(initialPosition.x, initialPosition.y - moveDownDistance);
         
-        // Move down
         float elapsedTime = 0f;
         while (elapsedTime < moveDuration)
         {
@@ -101,23 +93,16 @@ public class MiniBossScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // Wait before starting horizontal movement
 
         isMovingHorizontally = true; // Start moving horizontally
-
-        // Set the initial target position for left/right movement
         targetX = 0f; // Start at the center
     }
 
-    // Method to move left and right smoothly
     void MoveLeftRight()
     {
-        // Calculate the target position using Mathf.PingPong for smooth left/right movement
         targetX = Mathf.PingPong(Time.time * moveSpeed, moveRange * 2) - moveRange; // Adjusted to move between -3 and 3
-
-        // Smoothly move towards the target x position
         float smoothX = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * moveSpeed);
         transform.position = new Vector2(smoothX, yPosition); // Update position, keeping y constant
     }
 
-    // Handle health damage and drops
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
@@ -151,8 +136,6 @@ public class MiniBossScript : MonoBehaviour
     void HandleDrops()
     {
         float randomValue = Random.Range(0f, 1f);
-
-        // Adjusted drop logic to ensure that only one item drops per miniboss
         if (randomValue <= healthBuffDropRate)
         {
             Instantiate(healthBuffPrefab, transform.position, Quaternion.identity);

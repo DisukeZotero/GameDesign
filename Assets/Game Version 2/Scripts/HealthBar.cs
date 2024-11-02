@@ -6,13 +6,11 @@ public class HealthBar : MonoBehaviour
 {
     public Transform bar; // Transform representing the health bar
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         

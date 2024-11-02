@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; // Set the game time scale to normal
         // Ensure that the endText and levelCompletePanel are hidden at the start
         endText.SetActive(false);
         levelCompletePanel.SetActive(false);
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour
         endText.SetActive(true); // Show the end text
 
         yield return new WaitForSeconds(3f); // Wait for 3 more seconds before displaying the level complete panel
-        Time.timeScale = 0f;
+        Time.timeScale = 0f; // Pause the game time
         levelCompletePanel.SetActive(true); // Show the level complete panel
     }
 

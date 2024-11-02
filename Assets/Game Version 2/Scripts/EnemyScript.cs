@@ -13,7 +13,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject coinPrefab; // Prefab for coin drop
     public GameObject upgradePrefab; // Prefab for upgrade drop
     public GameObject healthBuffPrefab; // Prefab for health buff drop
-    public GameObject enemyExplosionPrefab; // Prefab for Explosion
+    public GameObject enemyExplosionPrefab; // Prefab for enemy explosion effect
 
     [Range(0f, 1f)]
     public float healthBuffDropRate = 0.15f; // Drop rate for health buff
@@ -32,34 +32,34 @@ public class EnemyScript : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(EnemyShooting()); // Start shooting coroutine
+        StartCoroutine(EnemyShooting()); // Start the shooting coroutine
         damage = barSize / health; // Calculate damage per hit for health bar
     }
 
     void Update()
-{
-    // Find the player object
-    GameObject player = GameObject.FindWithTag("Player");
-    if (player != null)
     {
-        // Calculate the direction to the player
-        Vector2 direction = (player.transform.position - transform.position).normalized;
-
-        // Calculate the distance between the enemy and the player
-        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-
-        // Desired distance to maintain from the player
-        float stoppingDistance = 2f; // Adjust this value to set how far above the player the enemy should stop
-
-        // Move towards the player only if the enemy is farther than the stopping distance
-        if (distanceToPlayer > stoppingDistance)
+        // Find the player object
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
         {
-            // Apply a slight speed boost when moving towards the player
-            float speedBoost = 1.5f; // Increase this value for a greater speed boost
-            transform.Translate(direction * speed * speedBoost * Time.deltaTime);
+            // Calculate the direction to the player
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+
+            // Calculate the distance between the enemy and the player
+            float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
+            // Desired distance to maintain from the player
+            float stoppingDistance = 2f; // Adjust this value to set how far above the player the enemy should stop
+
+            // Move towards the player only if the enemy is farther than the stopping distance
+            if (distanceToPlayer > stoppingDistance)
+            {
+                // Apply a slight speed boost when moving towards the player
+                float speedBoost = 1.5f; // Increase this value for a greater speed boost
+                transform.Translate(direction * speed * speedBoost * Time.deltaTime); // Move the enemy
+            }
         }
     }
-}
 
     void DamageHealthbar()
     {
@@ -72,6 +72,7 @@ public class EnemyScript : MonoBehaviour
 
     void EnemyFire()
     {
+        // Spawn bullets from all gun points
         for (int i = 0; i < gunPoint.Length; i++)
         {
             Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity); // Spawn bullets
@@ -101,7 +102,7 @@ public class EnemyScript : MonoBehaviour
                 HandleDrops(); // Handle item drops
                 Destroy(gameObject); // Destroy the enemy
                 GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
-                Destroy(enemyExplosion, 0.4f);
+                Destroy(enemyExplosion, 0.4f); // Destroy explosion effect after a short duration
             }
         }
     }

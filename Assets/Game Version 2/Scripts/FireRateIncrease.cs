@@ -17,7 +17,7 @@ public class FireRateIncrease : PowerUpEffects
 
         if (shootingComponent != null) // Check if the Shooting component exists
         {
-            // Calculate the new fire rate
+            // Calculate the new fire rate by subtracting the increase amount
             float newFireRate = shootingComponent.fireRate - amount;
 
             // Ensure the new fire rate does not go below the minimum limit
@@ -26,11 +26,11 @@ public class FireRateIncrease : PowerUpEffects
                 newFireRate = MinFireRate; // Set to minimum limit if below it
             }
 
-            shootingComponent.fireRate = newFireRate; // Update the fire rate
+            shootingComponent.fireRate = newFireRate; // Update the fire rate with the new value
         }
         else
         {
-            Debug.LogWarning("Shooting component not found on the target.");
+            Debug.LogWarning("Shooting component not found on the target."); // Log a warning if the component is missing
         }
     }
 }

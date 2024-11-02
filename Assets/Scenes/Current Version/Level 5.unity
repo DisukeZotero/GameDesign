@@ -1352,8 +1352,8 @@ MonoBehaviour:
   - {fileID: 2803770024767779096, guid: 28cfbf660f2858144b5392a05b2055cb, type: 3}
   minibosses:
   - {fileID: 9049683385127574441, guid: ca00c92cebf4d9b42bee46c3d223cf0e, type: 3}
-  respawnTime: 2
-  enemiesPerWave: 6
+  respawnTime: 1
+  enemiesPerWave: 5
   totalWaves: 5
   gameController: {fileID: 383350264}
 --- !u!4 &818044953
