@@ -13,6 +13,7 @@ public class MiniBossScript : MonoBehaviour
     public GameObject coinPrefab; // Prefab for coin drop
     public GameObject upgradePrefab; // Prefab for upgrade drop
     public GameObject healthBuffPrefab; // Prefab for health buff drop
+    public GameObject enemyExplosionPrefab; // Prefab for Explosion
 
     [Range(0f, 1f)]
     public float healthBuffDropRate = 0.15f; // Drop rate for health buff
@@ -20,6 +21,12 @@ public class MiniBossScript : MonoBehaviour
     public float upgradeDropRate = 0.1f; // Drop rate for upgrade
     [Range(0f, 1f)]
     public float coinDropRate = 0.3f; // Drop rate for coins
+
+    // Audio settings
+    public AudioClip bulletSound; // Sound for shooting
+    public AudioClip damageSound; // Sound for getting hit
+    public AudioClip explosionSound; // Sound for explosion
+    public AudioSource audioSource; // Audio source for playing sounds
 
     private float barSize = 1f; // Size of the health bar
     private float damage = 0; // Damage value
@@ -64,6 +71,11 @@ public class MiniBossScript : MonoBehaviour
         for (int i = 0; i < gunPoint.Length; i++)
         {
             Instantiate(enemyBullet, gunPoint[i].position, Quaternion.identity);
+        }
+        // Play shooting sound
+        if (audioSource && bulletSound)
+        {
+            audioSource.PlayOneShot(bulletSound);
         }
     }
 
@@ -110,14 +122,18 @@ public class MiniBossScript : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            DamageHealthbar();
-            Destroy(collision.gameObject);
-            Debug.Log($"Miniboss hit! Current health: {health}"); // Debug log for health
+            audioSource.PlayOneShot(damageSound); // Play damage sound
+            DamageHealthbar(); // Apply damage to the health bar
+            Destroy(collision.gameObject); // Destroy the player's bullet
+            Debug.Log($"Mini Boss hit! Current health: {health}"); 
             if (health <= 0)
             {
-                HandleDrops();
-                Debug.Log("Miniboss defeated!"); // Debug log for defeat
-                Destroy(gameObject);
+                AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f); // Play explosion sound
+                HandleDrops(); // Handle item drops
+                Debug.Log("Boss defeated!"); 
+                Destroy(gameObject); // Destroy the boss
+                GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(enemyExplosion, 0.4f);
             }
         }
     }
@@ -128,6 +144,7 @@ public class MiniBossScript : MonoBehaviour
         {
             health -= 1;
             barSize = barSize - damage;
+            Debug.Log($"Miniboss damaged! Remaining health: {health}"); // Log the remaining health after damage
         }
     }
 

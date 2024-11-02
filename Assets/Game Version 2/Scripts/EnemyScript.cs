@@ -13,6 +13,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject coinPrefab; // Prefab for coin drop
     public GameObject upgradePrefab; // Prefab for upgrade drop
     public GameObject healthBuffPrefab; // Prefab for health buff drop
+    public GameObject enemyExplosionPrefab; // Prefab for Explosion
 
     [Range(0f, 1f)]
     public float healthBuffDropRate = 0.15f; // Drop rate for health buff
@@ -60,9 +61,6 @@ public class EnemyScript : MonoBehaviour
     }
 }
 
-
-
-
     void DamageHealthbar()
     {
         if (health > 0)
@@ -99,9 +97,11 @@ public class EnemyScript : MonoBehaviour
             Destroy(collision.gameObject); // Destroy the player's bullet
             if (health <= 0)
             {
-                AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position, 0.5f); // Play explosion sound
+                AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f); // Play explosion sound
                 HandleDrops(); // Handle item drops
                 Destroy(gameObject); // Destroy the enemy
+                GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(enemyExplosion, 0.4f);
             }
         }
     }

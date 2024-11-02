@@ -131,9 +131,10 @@ MonoBehaviour:
   padding: 0.8
   coinCountScript: {fileID: 0}
   GameController: {fileID: 0}
-  damageSound: {fileID: 8300000, guid: 9bc304dbb3d9bea4ca461c4c484b9012, type: 3}
+  enemyExplosionPrefab: {fileID: 1474150382130423383, guid: f8e8659899d129e469a5f795cf72b776, type: 3}
+  damageSound: {fileID: 0}
   explosionSound: {fileID: 8300000, guid: bed4de3cd01957a42a62a87bf07989c5, type: 3}
-  shootSound: {fileID: 8300000, guid: 684174be80ea9e14292b9e93f4c6e4a5, type: 3}
+  audioSource: {fileID: 5529552890866110822}
   health: 20
 --- !u!114 &8896739250115607838
 MonoBehaviour:
@@ -152,8 +153,9 @@ MonoBehaviour:
   - {fileID: 8409534589243674870}
   - {fileID: 2685578006349533129}
   - {fileID: 8407387187430402680}
-  fireRate: 0.45
-  AudioSource: {fileID: 5529552890866110822}
+  fireRate: 0.4
+  audioSource: {fileID: 5529552890866110822}
+  shootSound: {fileID: 8300000, guid: 684174be80ea9e14292b9e93f4c6e4a5, type: 3}
 --- !u!61 &1751471270311589505
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -236,9 +238,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 684174be80ea9e14292b9e93f4c6e4a5, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

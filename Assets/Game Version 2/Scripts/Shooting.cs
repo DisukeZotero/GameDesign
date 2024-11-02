@@ -7,7 +7,8 @@ public class Shooting : MonoBehaviour
     public GameObject playerBullet; // Reference to the bullet prefab
     public Transform[] spawnPoints;  // Array to hold positions for bullet spawn
     public float fireRate = 0.5f;    // Time in seconds between shots
-    public AudioSource AudioSource;
+    public AudioSource audioSource;   // Reference to the AudioSource component
+    public AudioClip shootSound;      // AudioClip to play when shooting
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,6 @@ public class Shooting : MonoBehaviour
     {
         while (true) // Infinite loop for continuous firing
         {
-            AudioSource.Play();
             // Check if playerBullet and spawn points are assigned before instantiating
             if (playerBullet != null && spawnPoints.Length > 0)
             {
@@ -28,6 +28,7 @@ public class Shooting : MonoBehaviour
                 foreach (Transform spawnPoint in spawnPoints)
                 {
                     Instantiate(playerBullet, spawnPoint.position, Quaternion.identity);
+                    PlayShootSound(); // Play the shooting sound for each bullet fired
                 }
             }
             else
@@ -40,9 +41,18 @@ public class Shooting : MonoBehaviour
         }
     }
 
+    // Function to play the shooting sound
+    void PlayShootSound()
+    {
+        if (shootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound); // Play the shoot sound
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
- 
+        // No need for any updates in this case
     }
 }

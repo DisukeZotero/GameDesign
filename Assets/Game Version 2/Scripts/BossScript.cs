@@ -13,6 +13,7 @@ public class BossScript : MonoBehaviour
     public GameObject coinPrefab; // Prefab for coin drop
     public GameObject upgradePrefab; // Prefab for upgrade drop
     public GameObject healthBuffPrefab; // Prefab for health buff drop
+    public GameObject enemyExplosionPrefab; // Prefab for Explosion
 
     [Range(0f, 1f)]
     public float healthBuffDropRate = 0.15f; // Drop rate for health buff
@@ -20,6 +21,11 @@ public class BossScript : MonoBehaviour
     public float upgradeDropRate = 0.1f; // Drop rate for upgrade
     [Range(0f, 1f)]
     public float coinDropRate = 0.3f; // Drop rate for coins
+
+    public AudioClip bulletSound; // Sound for shooting
+    public AudioClip damageSound; // Sound for getting hit
+    public AudioClip explosionSound; // Sound for explosion
+    public AudioSource audioSource; // Audio source for playing sounds
 
     private float barSize = 1f; // Size of the health bar
     private float damage; // Damage value per health unit
@@ -98,15 +104,19 @@ public class BossScript : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
+            audioSource.PlayOneShot(damageSound); // Play damage sound
             DamageHealthbar(); // Apply damage to the health bar
             Destroy(collision.gameObject); // Destroy the player's bullet
             Debug.Log($"Boss hit! Current health: {health}"); 
             if (health <= 0)
             {
+                AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f); // Play explosion sound
                 HandleDrops(); // Handle drops upon defeat
                 DestroyRemainingEnemies(); // Destroy all remaining enemies
                 Debug.Log("Boss defeated!"); 
                 Destroy(gameObject); // Destroy the boss
+                GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(enemyExplosion, 0.4f);
             }
         }
     }

@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     public float padding = 0.8f; // Padding to keep the player within screen boundaries
     public CoinCount coinCountScript; // Reference to the CoinCount script to update the coin count
     public GameController GameController; // Reference to the game controller script for game-over conditions
+    public GameObject enemyExplosionPrefab; // Prefab for Explosion
 
     private float minX; // Minimum X boundary for player movement
     private float maxX; // Maximum X boundary for player movement
@@ -17,7 +18,8 @@ public class PlayerScript : MonoBehaviour
 
     public AudioClip damageSound; // Sound clip to play when the player takes damage
     public AudioClip explosionSound; // Sound clip to play when the player dies
-    public AudioClip shootSound; // Sound clip to play when the player shoots
+
+    public AudioSource audioSource; // Reference to the AudioSource component
 
     public float health = 20f; // Player's starting health
     private float maxHealth = 20f; // Maximum health the player can have
@@ -28,6 +30,9 @@ public class PlayerScript : MonoBehaviour
     {
         FindBoundaries(); // Calculate the screen boundaries for player movement
         damage = barFillAmount / health; // Calculate how much to decrease the health bar per damage
+
+        // Get the AudioSource component attached to this GameObject
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FindBoundaries()
@@ -51,64 +56,31 @@ public class PlayerScript : MonoBehaviour
 
         // Update player's position
         transform.position = new Vector2(newXpos, newYpos);
-
-        // Check for shooting input (e.g., space bar)
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot(); // Call the shoot function when the fire button is pressed
-        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the collision is with an enemy bullet
-        if (collision.CompareTag("EnemyBullet"))
+        if (collision.CompareTag("EnemyBullet") || collision.CompareTag("MiniBossBullet"))
         {
             DamagePlayerHealthbar(); // Decrease health bar on taking damage
 
-            // Play damage sound at the player's position
+            // Play damage sound if available
             if (damageSound != null)
             {
-                AudioSource.PlayClipAtPoint(damageSound, transform.position);
+                audioSource.PlayOneShot(damageSound);
             }
 
             Destroy(collision.gameObject); // Destroy the enemy bullet
-            
+
             if (health <= 0) // Check if player health is depleted
             {
-                // Play explosion sound at the player's position
-                if (explosionSound != null)
-                {
-                    AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f);
-                }
-
+                // Play explosion sound if available
+                AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f); // Play explosion sound
                 GameController.GameOver(); // Trigger game over from GameController
                 Destroy(gameObject); // Destroy player object
-            }
-        }
-
-        if (collision.CompareTag("MiniBossBullet"))
-        {
-            DamagePlayerHealthbar(); // Decrease health bar on taking damage
-
-            // Play damage sound at the player's position
-            if (damageSound != null)
-            {
-                AudioSource.PlayClipAtPoint(damageSound, transform.position);
-            }
-
-            Destroy(collision.gameObject); // Destroy the enemy bullet
-            
-            if (health <= 0) // Check if player health is depleted
-            {
-                // Play explosion sound at the player's position
-                if (explosionSound != null)
-                {
-                    AudioSource.PlayClipAtPoint(explosionSound, transform.position, 0.5f);
-                }
-
-                GameController.GameOver(); // Trigger game over from GameController
-                Destroy(gameObject); // Destroy player object
+                GameObject enemyExplosion = Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(enemyExplosion, 0.4f);
             }
         }
 
@@ -128,18 +100,6 @@ public class PlayerScript : MonoBehaviour
             health -= 1; // Reduce health by 1
             barFillAmount -= damage; // Update fill amount
             playerHealthbar.SetAmount(barFillAmount); // Set health bar fill amount
-        }
-    }
-
-    // Function to handle shooting
-    void Shoot()
-    {
-        // Implement shooting logic (e.g., instantiate bullet)
-        
-        // Play shoot sound at the player's position
-        if (shootSound != null)
-        {
-            AudioSource.PlayClipAtPoint(shootSound, transform.position);
         }
     }
 

@@ -166,10 +166,11 @@ MonoBehaviour:
   coinPrefab: {fileID: 2675546640335225960, guid: b62746f5f72db3b4b87273291b70dd93, type: 3}
   upgradePrefab: {fileID: 7570380276939103889, guid: 539b3f2e60914e6438eb8520758b72e0, type: 3}
   healthBuffPrefab: {fileID: 1877575589808396509, guid: 0c09a0ecc1722344593887b97e17b6cd, type: 3}
+  enemyExplosionPrefab: {fileID: 1474150382130423383, guid: f8e8659899d129e469a5f795cf72b776, type: 3}
   healthBuffDropRate: 0.5
   upgradeDropRate: 0.4
   coinDropRate: 0
-  bulletSound: {fileID: 8300000, guid: d1c722439626ae845b8381eea92f1d6a, type: 3}
+  bulletSound: {fileID: 0}
   damageSound: {fileID: 8300000, guid: 9bc304dbb3d9bea4ca461c4c484b9012, type: 3}
   explosionSound: {fileID: 8300000, guid: 74a3162eaf949ea44b9faf22b1122f2e, type: 3}
   audioSource: {fileID: 3598982968887298776}
@@ -265,9 +266,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d1c722439626ae845b8381eea92f1d6a, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
